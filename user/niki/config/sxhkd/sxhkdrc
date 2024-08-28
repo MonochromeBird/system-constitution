@@ -5,7 +5,7 @@ super + a
 	kitty pulsemixer
 
 super + shift + b
-	kitty pulsemixer
+	kitty bluetoothctl
 
 super + ctrl + Return
 	kitty --directory ~/ tmux attach
