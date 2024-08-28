@@ -48,7 +48,9 @@
 			};
 		in {
 		nixosConfigurations = {
-
+			neopax = nixosCustomSystem {
+				modules = [ ./user/niki/hardware/neopax.nix ./user/niki/system.nix ];
+			};
 		};
 	};
 }
