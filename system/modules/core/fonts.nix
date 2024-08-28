@@ -1,7 +1,6 @@
 { pkgs, ... }:
 {
 	system.fonts.packages = with pkgs; [
-		nerdfonts
 		jetbrains-mono
 		noto-fonts
 		dejavu_fonts
