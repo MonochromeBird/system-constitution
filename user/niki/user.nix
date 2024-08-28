@@ -4,6 +4,7 @@
 
 	lawModules = [
 		/core/fonts
+		/core/gnupg
 	];
 
 	packages = with pkgs; [
