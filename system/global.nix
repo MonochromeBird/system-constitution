@@ -73,6 +73,8 @@
 				(writeShellScriptBin "nir" ''nix run nixpkgs#$1 -- ''${@:2}'')
 				(writeShellScriptBin "nxs" ''nix search nixpkgs $@'')
 
+				(writeShellScriptBin "warp" ''nix-shell ${lawConfig.absolutePath}/system/environments/$1.nix && echo "warped out"'')
+
 				vim
 				tmux
 				wget
