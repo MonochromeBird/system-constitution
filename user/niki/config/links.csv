@@ -1,0 +1,15 @@
+qutebrowser.py,.config/qutebrowser/config.py
+kitty,.config/kitty
+awesome,.config/awesome
+sxhkd,.config/sxhkd
+fonts,.local/share/fonts
+tmux,.config/tmux
+gitconfig,.gitconfig
+mimeapps.list,.config/mimeapps.list
+emacs,.config/emacs
+emacs/emacs.el,.emacs.el
+vim/vimrc,.vimrc
+vim,.config/nvim
+mpd,.config/mpd
+ncmpcpp,.config/ncmpcpp
+bashrc,.bashrc

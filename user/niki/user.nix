@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, law, ... }:
 {
 	username = "niki";
 
@@ -9,5 +9,9 @@
 		
 		pulsemixer
 	];
+
+	home = { config, ... }: {
+		imports = [ (import ./config (law.allArgs // { inherit config; })) ];
+	};
 }
 

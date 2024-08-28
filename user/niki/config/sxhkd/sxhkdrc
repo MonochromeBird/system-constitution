@@ -1,0 +1,60 @@
+super + Return
+	kitty
+
+super + a
+	kitty pulsemixer
+
+super + shift + b
+	kitty pulsemixer
+
+super + ctrl + Return
+	kitty --directory ~/ tmux attach
+
+super + shift + s
+	flameshot gui
+
+super + q
+	librewolf
+
+super + e
+	pass -c $(find .password-store/ -iname "*.gpg" | sed -e "s/\.password-store\///g" -e "s/\.gpg//g" | sort | dmenu)
+
+XF86AudioLowerVolume
+	pulsemixer --change-volume -5
+
+XF86AudioMute
+	pulsemixer --toggle-mute
+
+XF86AudioNext
+	mpc prev
+
+XF86AudioPlay
+	mpc toggle
+
+XF86AudioPrev
+	mpc next
+
+super + i
+	mpc prev
+
+super + o
+	mpc toggle
+
+super + p
+	mpc next
+
+super + shift + m
+	kitty ncmpcpp
+
+XF86AudioRaiseVolume
+	pulsemixer --change-volume +5
+
+XF86AudioStop
+	mpc stop
+
+XF86MonBrightnessDown
+	brightnessctl s 10%-
+
+XF86MonBrightnessUp
+	brightnessctl s +10%
+
