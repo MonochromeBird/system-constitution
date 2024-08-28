@@ -90,6 +90,15 @@
 			};
 		};
 
+		hardware = {
+			bluetooth = {
+				enable = lib.mkDefault true;
+				powerOnBoot = lib.mkDefault false;
+			};
+
+			graphics.enable = lib.mkDefault true;
+		};
+
 		programs = {
 			firejail.enable = lib.mkDefault true;
 			dconf.enable = lib.mkDefault true;
