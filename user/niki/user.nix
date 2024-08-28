@@ -2,6 +2,10 @@
 {
 	username = "niki";
 
+	lawModules = [
+		/core/fonts
+	];
+
 	packages = with pkgs; [
 		librewolf
 		kitty
@@ -13,6 +17,8 @@
 		ncmpcpp
 		sxhkd
 		flameshot
+		brightnessctl
+		dmenu
 	];
 
 	home = { config, ... }: {
