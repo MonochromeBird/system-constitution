@@ -1,7 +1,8 @@
 { pkgs, ... }:
 {
 	username = "alek";
-	user.description = "Artifício";
+	name = "Artifício";
+	shell = pkgs.fish;
 
 	lawModules = [
 		/network/nordvpn
@@ -43,10 +44,7 @@
 	
 	home = { config, ... }: {
 		imports = [ ./config/desktop/plasma/home.nix ];
-		
-		programs.bash = { enable = true; initExtra = ''fish''; };
-		programs.fish.enable = true;
-		
+
 		services.unclutter = {
 			enable = true;
 			timeout = 2;
