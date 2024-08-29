@@ -23,6 +23,7 @@ args@{
 		globalUser = {
 			isNormalUser = lib.mkDefault true;
 			isSystemUser = lib.mkDefault false;
+			ignoreShellProgramCheck = lib.mkDefault true;
 		};
 
 		administratorByDefault = true;
