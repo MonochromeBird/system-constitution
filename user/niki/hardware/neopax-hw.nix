@@ -18,7 +18,7 @@
       fsType = "btrfs";
     };
 
-  boot.initrd.luks.devices."ssd".device = "/dev/disk/by-uuid/07175595-c956-4221-a77e-62aa7b010c54";
+  boot.initrd.luks.devices."hdd".device = "/dev/disk/by-uuid/07175595-c956-4221-a77e-62aa7b010c54";
 
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/12CE-A600";
