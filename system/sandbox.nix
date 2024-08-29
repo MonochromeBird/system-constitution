@@ -24,7 +24,8 @@ rec {
 						PROFILE_ARG=--profile="$PROFILE"
 					fi
 					
-					firejail $PROFILE_ARG $EXTRA_ARGS -- ${parameters.executable} $@
+					firejail $PROFILE_ARG $EXTRA_ARGS -- ${parameters.executable}\
+					${utils.insertSpacedIfAvailable parameters "programArgs"} $@
 				''
 			);
 
@@ -37,8 +38,10 @@ rec {
 	readParameters = parameters: {
 		namespace = "__void__";
 
-		useRecommendedPreset = true;
 		disable = false;
+
+		useRecommendedPreset = true;
+		arguments = [ ];
 
 		allowCameras = false;
 		allowAudio = true;
@@ -66,5 +69,6 @@ rec {
 			(if finalParameters.allowHardwareAcceleration then [ ] else [ "--no3d" ])
 		];
 		abortIfMissingProfile = false;
+		programArgs = finalParameters.arguments;
 	};
 }
