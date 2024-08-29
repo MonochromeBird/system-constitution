@@ -19,9 +19,13 @@
 		tldr
 		
 		pulsemixer
-
+		
+		sxiv
+		mpv
+		
 		mpd
 		ncmpcpp
+		
 		sxhkd
 		flameshot
 		brightnessctl
