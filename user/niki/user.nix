@@ -32,6 +32,10 @@
 		dmenu
 	];
 
+	system = {
+		services.xserver.windowManager.awesome.enable = true;
+	};
+
 	home = { config, ... }: {
 		imports = [ (import ./config (law.allArgs // { inherit config; })) ];
 

@@ -14,7 +14,6 @@
 			xserver = {
 				enable = true;
 				displayManager.gdm.enable = true;
-				windowManager.awesome.enable = true;
 				
 				xkb = {
 					layout = "us,br";
