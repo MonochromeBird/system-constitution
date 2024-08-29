@@ -1,7 +1,9 @@
 { pkgs, sandbox, opts, ... }:
 {
 	packages = [
-		(sandbox.package pkgs.steam opts.sandbox)
+		(sandbox.package pkgs.steam
+			# https://github.com/ValveSoftware/steam-for-linux/issues/8859
+			({ arguments = [ "-tcp" ]; } // opts.sandbox))
 	];
 
 	allowedUnfree = [
