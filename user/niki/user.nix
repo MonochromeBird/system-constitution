@@ -24,6 +24,7 @@
 		mpv
 		
 		mpd
+		mpc-cli
 		ncmpcpp
 		
 		sxhkd
