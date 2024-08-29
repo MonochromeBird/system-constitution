@@ -5,11 +5,9 @@
 		/network/anonymous
 	];
 
-	systemUsers = [ "alek" ];
+	systemUsers = [ "alek" "niki" ];
 
 	system = {
-		imports	= [ ./config/desktop/plasma/system.nix ];
-		
 		services.xserver.xkb.layout  = "br";
 		services.xserver.xkb.options = "grp:alt_caps_toggle";
 	};

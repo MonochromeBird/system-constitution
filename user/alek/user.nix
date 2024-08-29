@@ -1,7 +1,6 @@
 { pkgs, ... }:
 {
 	username = "alek";
-
 	user.description = "Artifício";
 
 	lawModules = [
@@ -40,9 +39,10 @@
 		tldr
 	];
 
+	system.imports	= [ ./config/desktop/plasma/system.nix ];
+	home.imports = [ ./config/desktop/plasma/home.nix ];
+	
 	home = { config, ... }: {
-		imports = [ ./config/desktop/plasma/home.nix ];
-		
 		programs.bash = { enable = true; initExtra = ''fish''; };
 		programs.fish.enable = true;
 		
