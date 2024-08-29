@@ -3,8 +3,10 @@
 	username = "niki";
 
 	lawModules = [
-		/core/fonts
+		/network/tor
+
 		/core/gnupg
+		/core/fonts
 
 		/programming/godot
 		/programming/basic
