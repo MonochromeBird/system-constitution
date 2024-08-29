@@ -4,6 +4,8 @@
 		clang-tools
 		clang
 		gcc14
+
+		pkg-config
 		
 		gnumake
 		cmake
