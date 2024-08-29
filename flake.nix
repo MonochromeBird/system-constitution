@@ -46,11 +46,32 @@
 					];})
 				];
 			};
+
+			lib = nixpkgs.lib;
+			utils = import ./system/utils.nix { inherit lib; };
+
+			extractConfigurationsFromUserDirectory = user:
+			let
+				dir = ./. + "/user/${user}";
+				hwdir = ./. + "/user/${user}/hardware";
+			in lib.attrsets.mergeAttrsList (if (utils.hasDirectory dir "hardware") then
+				(lib.lists.forEach (utils.getDirectories hwdir)
+					(hw: { "${user}.${hw}" = lib.concatLists [
+						[ (./. + "/user/${user}/hardware/${hw}/system.nix") ]
+						(if (utils.hasFile dir "system.nix")
+						then [ (./. + "/user/${user}/system.nix") ]
+						else [])
+					]; })
+				)
+			else []);
+
+			lawMachines = (lib.attrsets.mergeAttrsList
+				(lib.lists.forEach (utils.getDirectories ./user)
+					(user: extractConfigurationsFromUserDirectory user)));
 		in {
-		nixosConfigurations = {
-			neopax = nixosCustomSystem {
-				modules = [ ./user/niki/hardware/neopax.nix ./user/niki/system.nix ];
-			};
-		};
+		nixosConfigurations = lib.attrsets.mapAttrs
+			(name: moduleList: nixosCustomSystem {
+				modules = moduleList;
+			}) lawMachines;
 	};
 }
