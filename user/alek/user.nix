@@ -45,7 +45,7 @@
 		imports = [ ./config/desktop/plasma/home.nix ];
 
 		programs.zoxide = { enable = true; enableFishIntegration = true; } ;
-		programs.fish = { enable = true; interactiveShellInit = "(zoxide init fish | source); alias cd=z"; };
+		programs.fish = { enable = true; interactiveShellInit = "zoxide init fish | source; alias cd=z"; };
 		
 		services.unclutter = {
 			enable = true;
