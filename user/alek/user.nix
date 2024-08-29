@@ -29,7 +29,6 @@
 		rofi
 		
 		oh-my-fish
-		zoxide
 		fish
 		
 		discord
@@ -45,6 +44,9 @@
 	home = { config, ... }: {
 		imports = [ ./config/desktop/plasma/home.nix ];
 
+		programs.zoxide = { enable = true; enableFishIntegration = true; } ;
+		programs.fish.enable = true;
+		
 		services.unclutter = {
 			enable = true;
 			timeout = 2;
