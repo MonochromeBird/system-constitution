@@ -26,7 +26,9 @@
 				enable = true;
 
 				openDefaultPorts = true;
-				settings.options.urAccepted = -1;
+				
+				# Seems to cause the entire configuration to be reset!
+				# settings.options.urAccepted = -1;
 
 				user = "niki";
 				dataDir = "/home/niki/.local/share/syncthing";
