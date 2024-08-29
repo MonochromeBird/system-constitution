@@ -30,6 +30,9 @@
 		flameshot
 		brightnessctl
 		dmenu
+
+		neovim
+		emacs
 	];
 
 	system = {
