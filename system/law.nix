@@ -56,9 +56,11 @@ args@{
 			{
 				imports = [];
 				lawModules = [ ];
+				allowedUnfree = [ ];
 				groups = [ ];
 				user = { };
 				home = { };
+				system = {};
 				packages = [ ];
 				isAdministrator = administratorByDefault;
 			}
@@ -189,7 +191,7 @@ args@{
 				in {
 					_file = lawUser._file;
 
-					allowedUnfree = utils.mergeListsFromSets lawModules "allowedUnfree";
+					allowedUnfree = (utils.mergeListsFromSets lawModules "allowedUnfree") ++ lawUser.allowedUnfree;
 
 					users.users.${unifiedLawUser.username} = lib.attrsets.mergeAttrsList [
 						lawUser.user
@@ -218,7 +220,7 @@ args@{
 		makeSystemUserModule = lawUsers: {
 			imports = [
 				(makeUserModule lawUsers)
-			] ++ (lib.lists.forEach lawUsers (lawUser:
+			] ++ (lib.lists.forEach lawUsers (lawUser: lawUser.system)) ++ (lib.lists.forEach lawUsers (lawUser:
 				makeSystemModulesById lawUser.lawModules
 			));
 		};
