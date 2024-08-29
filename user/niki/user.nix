@@ -6,7 +6,7 @@
 		/core/fonts
 		/core/gnupg
 
-		/programming/godot/default
+		/programming/godot
 		/programming/basic
 
 		/games/steam

@@ -1,31 +1,37 @@
-{ pkgs }:
-
+{ pkgs ? import <nixpkgs> {} }:
 let
 	commonDependencies = with pkgs; [
-		libGL
-		vulkan-loader
-		xorg.libXext
-
-		scons
 		pkg-config
+		scons
+		
 		xorg.libX11
-		xorg.libXcursor
-		xorg.libXi
 		xorg.libXinerama
+		xorg.libXcursor
 		xorg.libXrandr
-		alsaLib
-		freetype
-		libpng
-		libtheora
-		libvorbis
-		openssl
-		zlib
+		xorg.libXext
+		xorg.libXi
+		
+		vulkan-loader
+		libGL
 		mesa
+		
+		alsaLib
+		libvorbis
+		
+		freetype
+		
+		openssl
+		
+		libtheora
+		libpng
+		zlib
 	];
 
 	windowsDependencies = with pkgs; [
 		pkgsCross.mingwW64.buildPackages.gcc
+		
 		wine
+		
 		(pkgs.fetchFromGitHub {
 			owner = "lhmouse";
 			repo = "mcfgthread";
@@ -34,17 +40,14 @@ let
 		})
 	];
 
-	macosDependencies = with pkgs; [
+	# macosDependencies = with pkgs; [
 		# darwin.apple_sdk.frameworks.CoreAudio
 		# darwin.apple_sdk.frameworks.CoreGraphics
 		# darwin.apple_sdk.frameworks.CoreServices
 		# darwin.apple_sdk.frameworks.Foundation
 		# darwin.apple_sdk.frameworks.IOKit
-	];
-
+	# ];
 in
-{
-	common = commonDependencies;
-	windows = windowsDependencies;
-	macos = macosDependencies;
+pkgs.mkShell {
+	nativeBuildInputs = commonDependencies ++ windowsDependencies;
 }
