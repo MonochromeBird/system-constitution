@@ -5,6 +5,12 @@
 	lawModules = [
 		/core/fonts
 		/core/gnupg
+
+		/programming/godot/default
+		/programming/basic
+
+		/games/steam
+		/games/atlauncher
 	];
 
 	packages = with pkgs; [
