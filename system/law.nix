@@ -59,6 +59,8 @@ args@{
 				allowedUnfree = [ ];
 				groups = [ ];
 				user = { };
+				name = "";
+				shell = pkgs.bash;
 				home = { };
 				system = {};
 				packages = [ ];
@@ -181,9 +183,12 @@ args@{
 				_file = unifiedLawUser._file;
 				users.users.${unifiedLawUser.username} = globalUser // {
 					extraGroups = if unifiedLawUser.isAdministrator then administratorGroups else [ ];
+					description = lib.mkDefault unifiedLawUser.name;
+					shell = lib.mkOverride 999 unifiedLawUser.shell;
 				};
 
 				home-manager.users.${unifiedLawUser.username}.imports = [ globalHome ];
+
 			}] ++ (lib.lists.forEach lawUsers (
 				lawUser: let 
 					user = readUser lawUser.user;
