@@ -85,6 +85,7 @@
 
 				(writeShellScriptBin "warp" ''nix-shell ${lawConfig.absolutePath}/system/environments/$1.nix && echo "warped out"'')
 
+				neovim
 				vim
 				tmux
 				wget
@@ -92,7 +93,9 @@
 				git
 				openssh
 				openssl
-
+				
+				busybox
+				
 				file
 				tree
 			];
