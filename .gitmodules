@@ -1,0 +1,3 @@
+[submodule "user/alek"]
+	path = user/alek
+	url = https://github.com/anonymalek/nixuser

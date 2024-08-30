@@ -15,5 +15,7 @@
 			xkb.layout  = "br";
 			xkb.options = "grp:alt_caps_toggle";
 		};
+		
+		time.timeZone = "America/Recife";
 	};
 }
