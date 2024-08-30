@@ -19,6 +19,11 @@
 			default = config.system.nixos.distroId;
 		};
 
+		identifier = lib.mkOption {
+			type = lib.types.str;
+			default = config.system.nixos.distroId;
+		};
+
 		# Not a real option! Used to spread other instances of nixpkgs
 		# while using the same unfree predicate function.
 		pkgs-stable = lib.mkOption {
@@ -68,6 +73,8 @@
 
 		environment = {
 			systemPackages = with pkgs; [
+				(writeShellScriptBin "sysid" ''echo ${config.identifier}'')
+
 				(writeShellScriptBin "punir" ''NIXPKGS_ALLOW_BROKEN=1 NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM=1 NIXPKGS_ALLOW_UNFREE=1 nix run nixpkgs#$1 --impure -- ''${@:2}'')
 				(writeShellScriptBin "unir" ''NIXPKGS_ALLOW_UNFREE=1 nix run nixpkgs#$1 --impure -- ''${@:2}'')
 				(writeShellScriptBin "nir" ''nix run nixpkgs#$1 -- ''${@:2}'')

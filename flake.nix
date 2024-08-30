@@ -27,7 +27,7 @@
 				};
 			};
 
-			nixosCustomSystem = { modules }: nixpkgs.lib.nixosSystem {
+			nixosCustomSystem = { modules, identifier }: nixpkgs.lib.nixosSystem {
 				system = args.system;
 				specialArgs = args;
 
@@ -36,6 +36,8 @@
 					nur.nixosModules.nur
 
 					home-manager.nixosModules.home-manager
+
+					{ config.identifier = identifier; }
 
 					({ config, lib, pkgs, ... }: {imports = [
 						((import ./system/law.nix (args // {
@@ -52,18 +54,26 @@
 
 			extractConfigurationsFromUserDirectory = user:
 			let
-				dir = ./. + "/user/${user}";
-				hwdir = ./. + "/user/${user}/hardware";
-			in lib.attrsets.mergeAttrsList (if (utils.hasDirectory dir "hardware") then
-				(lib.lists.forEach (utils.getDirectories hwdir)
-					(hw: { "${user}.${hw}" = lib.concatLists [
-						[ (./. + "/user/${user}/hardware/${hw}/system.nix") ]
-						(if (utils.hasFile dir "system.nix")
-						then [ (./. + "/user/${user}/system.nix") ]
-						else [])
-					]; })
-				)
-			else []);
+				userDirectory = ./. + "/user/${user}";
+				hardwareDirectory = ./. + "/user/${user}/hardware";
+			in
+				lib.attrsets.mergeAttrsList (if (utils.hasDirectory userDirectory "hardware") then
+					(lib.lists.forEach (utils.getDirectories hardwareDirectory)
+						(hardwareIdentifier: let fullIdentifier = "${user}.${hardwareIdentifier}"; in {
+							"${fullIdentifier}" = lib.concatLists [
+								[
+									(./. + "/user/${user}/hardware/${hardwareIdentifier}/system.nix")
+								]
+								
+								(
+									if (utils.hasFile userDirectory "system.nix")
+									then [ (./. + "/user/${user}/system.nix") ]
+									else []
+								)
+							];
+						})
+					)
+				else []);
 
 			lawMachines = (lib.attrsets.mergeAttrsList
 				(lib.lists.forEach (utils.getDirectories ./user)
@@ -72,6 +82,7 @@
 		nixosConfigurations = lib.attrsets.mapAttrs
 			(name: moduleList: nixosCustomSystem {
 				modules = moduleList;
+				identifier = name;
 			}) lawMachines;
 	};
 }
