@@ -2,7 +2,7 @@
 {
 	packages = with pkgs; [
 		gnupg
-		pass
+		(pass.withExtensions (exts: [ exts.pass-otp ]))
 		pinentry-gtk2
 	];
 
