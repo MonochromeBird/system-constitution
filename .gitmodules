@@ -1,3 +1,6 @@
 [submodule "user/alek"]
 	path = user/alek
 	url = https://github.com/anonymalek/nixuser
+[submodule "user/nixuser"]
+	path = user/trigo
+	url = https://github.com/graodopao/nixuser
