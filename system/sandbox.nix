@@ -24,7 +24,7 @@ rec {
 						PROFILE_ARG=--profile="$PROFILE"
 					fi
 					
-					firejail $PROFILE_ARG $EXTRA_ARGS --blacklist=/conf --name=${name} -- ${parameters.executable}\
+					firejail $PROFILE_ARG $EXTRA_ARGS --quiet --blacklist=/conf --name=${name} -- ${parameters.executable}\
 					${utils.insertSpacedIfAvailable parameters "programArgs"} $@
 				''
 			);

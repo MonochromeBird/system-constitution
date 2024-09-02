@@ -89,7 +89,7 @@
 
 				(writeShellScriptBin "warp" ''nix-shell ${extra-experimental} ${lawConfig.absolutePath}/system/environments/$1.nix && echo "warped out"'')
 
-				(writeShellScriptBin "sjoin" ''firejail --join=$1 ''${@:2}'')
+				(writeShellScriptBin "sjoin" ''firejail --quiet --join=$1 ''${@:2}'')
 
 				neovim
 				vim
