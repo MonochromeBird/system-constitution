@@ -24,7 +24,7 @@ rec {
 						PROFILE_ARG=--profile="$PROFILE"
 					fi
 					
-					firejail $PROFILE_ARG $EXTRA_ARGS -- ${parameters.executable}\
+					firejail $PROFILE_ARG $EXTRA_ARGS --name=${name} -- ${parameters.executable}\
 					${utils.insertSpacedIfAvailable parameters "programArgs"} $@
 				''
 			);
