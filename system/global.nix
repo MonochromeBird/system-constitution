@@ -72,20 +72,24 @@
 		services.xserver.xkb.layout = lib.mkDefault "us";
 
 		environment = {
-			systemPackages = with pkgs; [
+			systemPackages = let
+				extra-experimental = "--extra-experimental-features nix-command --extra-experimental-features flakes";
+			in with pkgs; [
 				(writeShellScriptBin "sysid" ''echo ${config.identifier}'')
 
-				(writeShellScriptBin "punir" ''NIXPKGS_ALLOW_BROKEN=1 NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM=1 NIXPKGS_ALLOW_UNFREE=1 nix run nixpkgs#$1 --impure -- ''${@:2}'')
-				(writeShellScriptBin "unir" ''NIXPKGS_ALLOW_UNFREE=1 nix run nixpkgs#$1 --impure -- ''${@:2}'')
-				(writeShellScriptBin "nir" ''nix run nixpkgs#$1 -- ''${@:2}'')
+				(writeShellScriptBin "punir" ''NIXPKGS_ALLOW_BROKEN=1 NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM=1 NIXPKGS_ALLOW_UNFREE=1 nix run ${extra-experimental} nixpkgs#$1 --impure -- ''${@:2}'')
+				(writeShellScriptBin "unir" ''NIXPKGS_ALLOW_UNFREE=1 nix run ${extra-experimental} nixpkgs#$1 --impure -- ''${@:2}'')
+				(writeShellScriptBin "nir" ''nix run ${extra-experimental} nixpkgs#$1 -- ''${@:2}'')
 
-				(writeShellScriptBin "nxs" ''nix search nixpkgs $@'')
-				(writeShellScriptBin "nrepl" ''nix repl --expr "import <nixpkgs>{}"'')
+				(writeShellScriptBin "nxs" ''nix search ${extra-experimental} nixpkgs $@'')
+				(writeShellScriptBin "nrepl" ''nix repl ${extra-experimental} --expr "import <nixpkgs>{}"'')
 
 				(writeShellScriptBin "nrb" ''${lawConfig.absolutePath}/rebuild.sh'')
 				(writeShellScriptBin "ncrb" ''nix-collect-garbage -d && sudo nix-collect-garbage -d && ${lawConfig.absolutePath}/rebuild.sh'')
 
-				(writeShellScriptBin "warp" ''nix-shell ${lawConfig.absolutePath}/system/environments/$1.nix && echo "warped out"'')
+				(writeShellScriptBin "warp" ''nix-shell ${extra-experimental} ${lawConfig.absolutePath}/system/environments/$1.nix && echo "warped out"'')
+
+				(writeShellScriptBin "sjoin" ''firejail --join=$1 ''${@:2}'')
 
 				neovim
 				vim
