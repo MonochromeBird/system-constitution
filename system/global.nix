@@ -97,6 +97,8 @@
 
 				(writeShellScriptBin "terminal" ''kitty $@'')
 
+                                (writeShellScriptBin "dsong" ''yt-dlp --embed-metadata --embed-chapters -x --audio-format best --audio-quality 0 --audio-multistreams --merge-output-format mkv $@'')
+
 				neovim
 				vim
 				tmux
@@ -112,6 +114,8 @@
 				
 				file
 				tree
+
+                                yt-dlp
 			];
 
 			variables = {
