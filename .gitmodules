@@ -4,3 +4,6 @@
 [submodule "user/nixuser"]
 	path = user/trigo
 	url = https://github.com/graodopao/nixuser
+[submodule "user/malwareskunk"]
+	path = user/malwareskunk
+	url = git@github.com:xeniafox/nixuser.git
