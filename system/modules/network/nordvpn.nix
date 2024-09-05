@@ -1,4 +1,4 @@
-{ config, nur-modules, ... }:
+{ config, nur-modules, pkgs, ... }:
 {
 	system = {
 		imports = [
@@ -18,6 +18,12 @@
 			allowedTCPPorts = [ 443 ];
 			allowedUDPPorts = [ 1194 ];
 		};
+
+		environment.systemPackages = with pkgs; [
+			(writeShellScriptBin "nv" ''nordvpn'')
+			(writeShellScriptBin "nvc" ''nordvpn c'')
+			(writeShellScriptBin "nvs" ''nordvpn s'')
+		];
 	};
 	
 	groups = [ "nordvpn" ];
