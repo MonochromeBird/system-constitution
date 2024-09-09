@@ -20,9 +20,9 @@
 		};
 
 		environment.systemPackages = with pkgs; [
-			(writeShellScriptBin "nv" ''nordvpn'')
-			(writeShellScriptBin "nvc" ''nordvpn c'')
-			(writeShellScriptBin "nvs" ''nordvpn s'')
+			(writeShellScriptBin "nv" ''nordvpn $@'')
+			(writeShellScriptBin "nvc" ''nordvpn c $@'')
+			(writeShellScriptBin "nvs" ''nordvpn s $@'')
 		];
 	};
 	
