@@ -91,7 +91,19 @@
 				(writeShellScriptBin "nrb" ''${lawConfig.absolutePath}/rebuild.sh'')
 				(writeShellScriptBin "ncrb" ''nix-collect-garbage -d && sudo nix-collect-garbage -d && ${lawConfig.absolutePath}/rebuild.sh'')
 
-				(writeShellScriptBin "warp" ''nix-shell ${extra-experimental} ${lawConfig.absolutePath}/system/environments/$1.nix && echo "warped out"'')
+				(writeShellScriptBin "warp" ''
+					CMDS1=""
+					CMDS2=""
+
+					if [ $# != 1 ]; then
+						CMDS1=--command
+						CMDS2="''${@:2}"
+					fi
+
+					nix-shell ${extra-experimental} ${lawConfig.absolutePath}/system/environments/$1.nix $CMDS1 $CMDS2
+
+					echo "warped out"
+				'')
 
 				(writeShellScriptBin "sjoin" ''firejail --quiet --join=$1 "''${@:2}"'')
 
