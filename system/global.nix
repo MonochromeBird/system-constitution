@@ -100,7 +100,7 @@
 						CMDS2="''${@:2}"
 					fi
 
-					nix-shell ${extra-experimental} ${lawConfig.absolutePath}/system/environments/$1.nix $CMDS1 $CMDS2
+					nix-shell ${extra-experimental} ${./environments}/$1.nix $CMDS1 "$CMDS2"
 
 					echo "warped out"
 				'')
