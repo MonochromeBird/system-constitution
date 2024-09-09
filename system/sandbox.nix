@@ -1,5 +1,9 @@
 { lib, pkgs, utils, ... }:
 rec {
+	packages = [
+		(pkgs.writeShellScriptBin "sandbox-exec-directory" (builtins.readFile ./sources/sandbox-exec-directory.sh))
+	];
+
 	wrappedPriority = -3;
 
 	setPriority = package:
