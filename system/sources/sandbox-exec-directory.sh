@@ -40,7 +40,7 @@ if [ "$COMMAND" = "" ]; then
 	COMMAND=ls
 fi
 
-FIREJAIL_ARGS="--quiet --blacklist=/conf --novideo --private-tmp --noblacklist=~/.gradle $FIREJAIL_EXTRA_ARGS"
+FIREJAIL_ARGS="--quiet --blacklist=/conf --novideo --private-tmp --noprofile $FIREJAIL_EXTRA_ARGS"
 
 DIR=$1
 
