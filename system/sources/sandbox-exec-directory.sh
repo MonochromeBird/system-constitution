@@ -53,7 +53,7 @@ Mount()
 {
 	for i in $(echo "$MUTABLE" | sed "s/,/\n/g")
 	do
-		sudo mount --bind $DIR/run $SANDBOX_HOME/$DIRECTORY_WITHIN/$i
+		sudo mount --bind $DIR/$i $SANDBOX_HOME/$DIRECTORY_WITHIN/$i
 	done
 }
 
@@ -73,7 +73,7 @@ Mkdirs
 
 EXCLUDE_PARAMS=$(for i in $(echo "$MUTABLE" | sed "s/,/\n/g")
 do
-	printf " --exclude=$DIR/$1 "
+	printf " --exclude=$DIR/$i "
 done)
 
 rsync -r $DIR/* $SANDBOX_HOME/$DIRECTORY_WITHIN $EXCLUDE_PARAMS
