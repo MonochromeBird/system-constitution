@@ -78,11 +78,11 @@
 				(writeShellScriptBin "sysid" ''echo ${config.identifier}'')
 				(writeShellScriptBin "listpkgs" ''nix eval --expr "let n = import <nixpkgs>{}; in n.lib.mapAttrsToList (n: v: n) n" --impure | sed -e 's/" "/\n/g' -e 's/" \]//g' -e 's/\[ "//g' '')
 
-				(writeShellScriptBin "nir" ''nix run ${extra-experimental} nixpkgs#$1 -- ''${@:2}'')
-				(writeShellScriptBin "unir" ''NIXPKGS_ALLOW_UNFREE=1 nix run ${extra-experimental} nixpkgs#$1 --impure -- ''${@:2}'')
-				(writeShellScriptBin "punir" ''NIXPKGS_ALLOW_BROKEN=1 NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM=1 NIXPKGS_ALLOW_UNFREE=1 nix run ${extra-experimental} nixpkgs#$1 --impure -- ''${@:2}'')
+				(writeShellScriptBin "nir" ''nix run ${extra-experimental} nixpkgs#$1 -- "''${@:2}"'')
+				(writeShellScriptBin "unir" ''NIXPKGS_ALLOW_UNFREE=1 nix run ${extra-experimental} nixpkgs#$1 --impure -- "''${@:2}"'')
+				(writeShellScriptBin "punir" ''NIXPKGS_ALLOW_BROKEN=1 NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM=1 NIXPKGS_ALLOW_UNFREE=1 nix run ${extra-experimental} nixpkgs#$1 --impure -- "''${@:2}"'')
 
-				(writeShellScriptBin "gnir" ''terminal nix run ${extra-experimental} nixpkgs#$(listpkgs | dmenu) -- $@'')
+				(writeShellScriptBin "gnir" ''terminal nix run ${extra-experimental} nixpkgs#$(listpkgs | dmenu) -- "$@"'')
 				(writeShellScriptBin "gpunir" ''NIXPKGS_ALLOW_BROKEN=1 NIXPKGS_ALLOW_UNSUPPORTED_SYSTEM=1 NIXPKGS_ALLOW_UNFREE=1 terminal nix run ${extra-experimental} nixpkgs#$(listpkgs | dmenu) -- $@'')
 
 				(writeShellScriptBin "nxs" ''nix search ${extra-experimental} nixpkgs $@'')
@@ -93,7 +93,7 @@
 
 				(writeShellScriptBin "warp" ''nix-shell ${extra-experimental} ${lawConfig.absolutePath}/system/environments/$1.nix && echo "warped out"'')
 
-				(writeShellScriptBin "sjoin" ''firejail --quiet --join=$1 ''${@:2}'')
+				(writeShellScriptBin "sjoin" ''firejail --quiet --join=$1 "''${@:2}"'')
 
 				(writeShellScriptBin "terminal" ''kitty $@'')
 
