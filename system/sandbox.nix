@@ -1,7 +1,9 @@
 { lib, pkgs, utils, ... }:
 rec {
-	packages = [
+	packages = with utils; [
 		(pkgs.writeShellScriptBin "sandbox-exec-directory" (builtins.readFile ./sources/sandbox-exec-directory.sh))
+		
+		(pkgs.writeShellScriptBin "generate-firejail-net" (builtins.readFile ./sources/generate-firejail-net.sh))
 	];
 
 	wrappedPriority = -3;
@@ -47,6 +49,9 @@ rec {
 		useRecommendedPreset = true;
 		arguments = [ ];
 
+		isolateNetwork = false;
+		
+		allowNetwork = true;
 		allowCameras = false;
 		allowAudio = true;
 		allowHardwareAcceleration = true;
@@ -71,6 +76,8 @@ rec {
 			(if finalParameters.allowCameras then [ ] else [ "--novideo" ])
 			(if finalParameters.allowAudio then [ ] else [ "--nosound" ])
 			(if finalParameters.allowHardwareAcceleration then [ ] else [ "--no3d" ])
+			(if finalParameters.allowNetwork then [ ] else [ "--net=none" ])
+			(if finalParameters.isolateNetwork then [ "$(generate-firejail-net)" ] else [ "--net=none" ])
 		];
 		abortIfMissingProfile = false;
 		programArgs = finalParameters.arguments;
