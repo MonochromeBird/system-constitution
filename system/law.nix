@@ -156,7 +156,7 @@ args@{
 
 		makeSystemModule = lawModules: {
 			allowedUnfree = utils.mergeListsFromSets lawModules "allowedUnfree";
-			environment.systemPackages = utils.mergeListsFromSets lawModules "packages";
+			environment.systemPackages = (utils.mergeListsFromSets lawModules "packages") ++ sandbox.packages;
 
 			imports = lib.concatLists [
 				(utils.getAllFromSets lawModules "system")
@@ -212,6 +212,7 @@ args@{
 								(utils.mergeListsFromSets lawModules "packages")
 								lawUser.packages
 								user.packages
+								sandbox.packages
 							];
 						}
 					];
