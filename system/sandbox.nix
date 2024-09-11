@@ -77,7 +77,7 @@ rec {
 			(if finalParameters.allowAudio then [ ] else [ "--nosound" ])
 			(if finalParameters.allowHardwareAcceleration then [ ] else [ "--no3d" ])
 			(if finalParameters.allowNetwork then [ ] else [ "--net=none" ])
-			(if finalParameters.isolateNetwork then [ "$(generate-firejail-net)" ] else [ "--net=none" ])
+			(if finalParameters.isolateNetwork then [ "$(generate-firejail-net)" ] else [ ])
 		];
 		abortIfMissingProfile = false;
 		programArgs = finalParameters.arguments;
