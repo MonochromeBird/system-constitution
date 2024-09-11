@@ -1,10 +1,14 @@
 { lib, pkgs, utils, ... }:
 rec {
 	packages = with utils; [
-		(pkgs.writeShellScriptBin "sandbox-exec-directory" (builtins.readFile ./sources/sandbox-exec-directory.sh))
-		
-		(pkgs.writeShellScriptBin "generate-firejail-net" (builtins.readFile ./sources/generate-firejail-net.sh))
+    sandbox-exec-directory
+    generate-firejail-net
 	];
+
+	sandbox-exec-directory = (pkgs.writeShellScriptBin "sandbox-exec-directory" (builtins.readFile ./sources/sandbox-exec-directory.sh));
+		
+	generate-firejail-net = (pkgs.writeShellScriptBin "generate-firejail-net" (builtins.readFile ./sources/generate-firejail-net.sh));
+
 
 	wrappedPriority = -3;
 
