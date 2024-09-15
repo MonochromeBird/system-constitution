@@ -4,13 +4,12 @@
 
 {
   pkgs ? import <nixpkgs> {},
-  version ? "v4.3-stable",
-  url_version ? "",
+  version ? "4.3-stable",
   bin_name ? "godot4-mono",
   repo ? "godot",
   hash ? "sha256-7N881aYASmVowZlYHVi6aFqZBZJuUWd5BrdvvdnK01E="
 }: pkgs.stdenv.mkDerivation rec {
-  release = "Godot_${version}_mono_linux";
+  release = "Godot_v${version}_mono_linux";
   bin = "${release}.x86_64";
 
   dirname = "${release}_x86_64";
@@ -20,7 +19,7 @@
   pname = bin_name;
   
   src = pkgs.fetchurl {
-    url = "https://github.com/godotengine/${repo}/releases/download/${if url_version == "" then version else url_version}/${zipname}";
+    url = "https://github.com/godotengine/${repo}/releases/download/${version}/${zipname}";
     hash = hash;
   };
 
