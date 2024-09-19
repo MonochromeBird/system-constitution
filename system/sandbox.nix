@@ -77,6 +77,8 @@ rec {
 				"--private=~/.sandbox/${finalParameters.namespace}"
 				"--private-tmp"
 			]
+			
+			(if finalParameters.useRecommendedPreset then [] else ["--noprofile"])
 			(if finalParameters.allowCameras then [ ] else [ "--novideo" ])
 			(if finalParameters.allowAudio then [ ] else [ "--nosound" ])
 			(if finalParameters.allowHardwareAcceleration then [ ] else [ "--no3d" ])

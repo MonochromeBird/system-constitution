@@ -3,7 +3,7 @@
 	packages = [
 		(sandbox.package pkgs.steam
 			# https://github.com/ValveSoftware/steam-for-linux/issues/8859
-			({ arguments = [ "-tcp" ]; } // opts.sandbox))
+			({ useRecommendedPreset = false; } // opts.sandbox))
 	];
 
 	allowedUnfree = [
