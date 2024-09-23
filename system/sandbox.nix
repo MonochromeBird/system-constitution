@@ -73,8 +73,14 @@ rec {
 	package = package: parameters: let
 		finalParameters = makeParametersFromPackage package parameters;
 	in if finalParameters.disable then package else
-		firejail.package package.meta.mainProgram {
-		executable = "${package}/bin/${package.meta.mainProgram}";
+
+		let
+			programName =
+				if (lib.attrsets.hasAttrByPath [ "meta" "mainProgram" ] package)
+				then package.meta.mainProgram else package.pname;
+			in
+		firejail.package programName {
+		executable = "${package}/bin/${programName}";
 		profile = if finalParameters.useRecommendedPreset then "${pkgs.firejail}/etc/firejail/${lib.getName package}.profile" else "";
 		extraArgs = lib.concatLists [
 			[
