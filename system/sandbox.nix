@@ -1,14 +1,17 @@
 { lib, pkgs, utils, ... }:
 rec {
 	packages = with utils; [
-    sandbox-exec-directory
-    generate-firejail-net
+		sandbox-exec-directory
+		generate-firejail-net
+		generate-firejail-args
 	];
 
 	sandbox-exec-directory = (pkgs.writeShellScriptBin "sandbox-exec-directory" (builtins.readFile ./sources/sandbox-exec-directory.sh));
-		
 	generate-firejail-net = (pkgs.writeShellScriptBin "generate-firejail-net" (builtins.readFile ./sources/generate-firejail-net.sh));
 
+	generate-firejail-args = (pkgs.writeShellScriptBin "generate-firejail-args" ''
+		printf -- "${firejail.constantArgs}"
+	'');
 
 	wrappedPriority = -3;
 
@@ -16,6 +19,8 @@ rec {
 		package // { meta = (package.meta // { priority = wrappedPriority; } ); };
 	
 	firejail = {
+		constantArgs = "--blacklist=/conf";
+		
 		package = name: parameters:
 			setPriority (pkgs.writeShellScriptBin name
 				''
@@ -34,7 +39,7 @@ rec {
 						PROFILE_ARG=--profile="$PROFILE"
 					fi
 					
-					firejail $PROFILE_ARG $EXTRA_ARGS --quiet --blacklist=/conf --name=${name} -- ${parameters.executable}\
+					firejail $PROFILE_ARG $EXTRA_ARGS --quiet ${firejail.constantArgs} --name=${name} -- ${parameters.executable}\
 					${utils.insertSpacedIfAvailable parameters "programArgs"} $@
 				''
 			);
