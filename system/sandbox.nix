@@ -51,7 +51,8 @@ rec {
 	};
 
 	readParameters = parameters: {
-		namespace = "__void__";
+		namespace = "";
+    bin = "";
 
 		disable = false;
 
@@ -72,31 +73,29 @@ rec {
 
 	package = package: parameters: let
 		finalParameters = makeParametersFromPackage package parameters;
-	in if finalParameters.disable then package else
-
-		let
-			programName =
-				if (lib.attrsets.hasAttrByPath [ "meta" "mainProgram" ] package)
-				then package.meta.mainProgram else package.pname;
-			in
-		firejail.package programName {
-		executable = "${package}/bin/${programName}";
-		profile = if finalParameters.useRecommendedPreset then "${pkgs.firejail}/etc/firejail/${lib.getName package}.profile" else "";
-		extraArgs = lib.concatLists [
-			[
-				"--mkdir=~/.sandbox/${finalParameters.namespace}"
-				"--private=~/.sandbox/${finalParameters.namespace}"
-				"--private-tmp"
-			]
-			
-			(if finalParameters.useRecommendedPreset then [] else ["--noprofile"])
-			(if finalParameters.allowCameras then [ ] else [ "--novideo" ])
-			(if finalParameters.allowAudio then [ ] else [ "--nosound" ])
-			(if finalParameters.allowHardwareAcceleration then [ ] else [ "--no3d" ])
-			(if finalParameters.allowNetwork then [ ] else [ "--net=none" ])
-			(if finalParameters.isolateNetwork then [ "$(generate-firejail-net)" ] else [ ])
-		];
-		abortIfMissingProfile = false;
-		programArgs = finalParameters.arguments;
-	};
+	in if finalParameters.disable then package else let
+		programName =
+			if (lib.attrsets.hasAttrByPath [ "meta" "mainProgram" ] package)
+			then package.meta.mainProgram else package.pname;
+	in
+		firejail.package (if finalParameters.bin != "" then finalParameters.bin else programName) {
+			executable = "${package}/bin/${programName}";
+			profile = if finalParameters.useRecommendedPreset then "${pkgs.firejail}/etc/firejail/${lib.getName package}.profile" else "";
+			extraArgs = lib.concatLists [
+				[
+					"--mkdir=~/.sandbox/${finalParameters.namespace}"
+					"--private=~/.sandbox/${finalParameters.namespace}"
+					"--private-tmp"
+				]
+				
+				(if finalParameters.useRecommendedPreset then [] else ["--noprofile"])
+				(if finalParameters.allowCameras then [ ] else [ "--novideo" ])
+				(if finalParameters.allowAudio then [ ] else [ "--nosound" ])
+				(if finalParameters.allowHardwareAcceleration then [ ] else [ "--no3d" ])
+				(if finalParameters.allowNetwork then [ ] else [ "--net=none" ])
+				(if finalParameters.isolateNetwork then [ "$(generate-firejail-net)" ] else [ ])
+			];
+			abortIfMissingProfile = false;
+			programArgs = finalParameters.arguments;
+		};
 }
