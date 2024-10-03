@@ -109,6 +109,8 @@
 
 				(writeShellScriptBin "terminal" ''kitty $@'')
 
+				steamPackages.steam-fhsenv-without-steam.run
+
 				neovim
 				vim
 				tmux
