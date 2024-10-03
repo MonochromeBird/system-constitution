@@ -1,14 +1,17 @@
 { lib, pkgs, utils, ... }:
 rec {
 	packages = with utils; [
-    sandbox-exec-directory
-    generate-firejail-net
+		sandbox-exec-directory
+		generate-firejail-net
+		generate-firejail-args
 	];
 
 	sandbox-exec-directory = (pkgs.writeShellScriptBin "sandbox-exec-directory" (builtins.readFile ./sources/sandbox-exec-directory.sh));
-		
 	generate-firejail-net = (pkgs.writeShellScriptBin "generate-firejail-net" (builtins.readFile ./sources/generate-firejail-net.sh));
 
+	generate-firejail-args = (pkgs.writeShellScriptBin "generate-firejail-args" ''
+		printf -- "${firejail.constantArgs}"
+	'');
 
 	wrappedPriority = -3;
 
@@ -16,6 +19,8 @@ rec {
 		package // { meta = (package.meta // { priority = wrappedPriority; } ); };
 	
 	firejail = {
+		constantArgs = "--blacklist=/conf";
+		
 		package = name: parameters:
 			setPriority (pkgs.writeShellScriptBin name
 				''
@@ -34,7 +39,7 @@ rec {
 						PROFILE_ARG=--profile="$PROFILE"
 					fi
 					
-					firejail $PROFILE_ARG $EXTRA_ARGS --quiet --blacklist=/conf --name=${name} -- ${parameters.executable}\
+					firejail $PROFILE_ARG $EXTRA_ARGS --quiet ${firejail.constantArgs} --name=${name} -- ${parameters.executable}\
 					${utils.insertSpacedIfAvailable parameters "programArgs"} $@
 				''
 			);
@@ -46,7 +51,8 @@ rec {
 	};
 
 	readParameters = parameters: {
-		namespace = "__void__";
+		namespace = "";
+    bin = "";
 
 		disable = false;
 
@@ -67,25 +73,29 @@ rec {
 
 	package = package: parameters: let
 		finalParameters = makeParametersFromPackage package parameters;
-	in if finalParameters.disable then package else
-		firejail.package package.meta.mainProgram {
-		executable = "${package}/bin/${package.meta.mainProgram}";
-		profile = if finalParameters.useRecommendedPreset then "${pkgs.firejail}/etc/firejail/${lib.getName package}.profile" else "";
-		extraArgs = lib.concatLists [
-			[
-				"--mkdir=~/.sandbox/${finalParameters.namespace}"
-				"--private=~/.sandbox/${finalParameters.namespace}"
-				"--private-tmp"
-			]
-			
-			(if finalParameters.useRecommendedPreset then [] else ["--noprofile"])
-			(if finalParameters.allowCameras then [ ] else [ "--novideo" ])
-			(if finalParameters.allowAudio then [ ] else [ "--nosound" ])
-			(if finalParameters.allowHardwareAcceleration then [ ] else [ "--no3d" ])
-			(if finalParameters.allowNetwork then [ ] else [ "--net=none" ])
-			(if finalParameters.isolateNetwork then [ "$(generate-firejail-net)" ] else [ ])
-		];
-		abortIfMissingProfile = false;
-		programArgs = finalParameters.arguments;
-	};
+	in if finalParameters.disable then package else let
+		programName =
+			if (lib.attrsets.hasAttrByPath [ "meta" "mainProgram" ] package)
+			then package.meta.mainProgram else package.pname;
+	in
+		firejail.package (if finalParameters.bin != "" then finalParameters.bin else programName) {
+			executable = "${package}/bin/${programName}";
+			profile = if finalParameters.useRecommendedPreset then "${pkgs.firejail}/etc/firejail/${lib.getName package}.profile" else "";
+			extraArgs = lib.concatLists [
+				[
+					"--mkdir=~/.sandbox/${finalParameters.namespace}"
+					"--private=~/.sandbox/${finalParameters.namespace}"
+					"--private-tmp"
+				]
+				
+				(if finalParameters.useRecommendedPreset then [] else ["--noprofile"])
+				(if finalParameters.allowCameras then [ ] else [ "--novideo" ])
+				(if finalParameters.allowAudio then [ ] else [ "--nosound" ])
+				(if finalParameters.allowHardwareAcceleration then [ ] else [ "--no3d" ])
+				(if finalParameters.allowNetwork then [ ] else [ "--net=none" ])
+				(if finalParameters.isolateNetwork then [ "$(generate-firejail-net)" ] else [ ])
+			];
+			abortIfMissingProfile = false;
+			programArgs = finalParameters.arguments;
+		};
 }
