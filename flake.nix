@@ -4,6 +4,8 @@
 		nixpkgs-stable.url = "nixpkgs/nixos-24.05";
 		nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
+		nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
+
 		home-manager = {
 			url = "github:nix-community/home-manager";
 			inputs.nixpkgs.follows = "nixpkgs";
@@ -12,7 +14,7 @@
 		nur.url = "github:nix-community/NUR";
 	};
 
-	outputs = inputArgs@{ nixpkgs, nixpkgs-stable, nixpkgs-unstable, home-manager, nur, ... }:
+	outputs = inputArgs@{ nixpkgs, nixos-cosmic, nixpkgs-stable, nixpkgs-unstable, home-manager, nur, ... }:
 		let
 			args = inputArgs // {
 				system = "x86_64-linux";
@@ -34,6 +36,18 @@
 				modules = [
 					./system/global.nix
 					nur.nixosModules.nur
+
+					#######################################################################################################
+					# Cosmic                                                                                              #
+					#######################################################################################################
+					{
+						nix.settings = {
+							substituters = [ "https://cosmic.cachix.org/" ];
+							trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+						};
+					}
+					nixos-cosmic.nixosModules.default
+					#######################################################################################################
 
 					home-manager.nixosModules.home-manager
 
