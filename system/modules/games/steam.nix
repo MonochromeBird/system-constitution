@@ -11,6 +11,7 @@
 		"steam-original"
 		"steam-run"
 		"steamcmd"
+		"steam-unwrapped"
 	];
 
 	system = {
