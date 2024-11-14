@@ -22,7 +22,6 @@
 			libjack2
 			jack2
 			qjackctl
-			jack2Full
 			jack_capture
 		];
 	};
