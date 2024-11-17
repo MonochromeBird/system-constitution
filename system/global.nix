@@ -109,7 +109,7 @@
 
 				(writeShellScriptBin "terminal" ''kitty $@'')
 
-				steamPackages.steam-fhsenv-without-steam.run
+				steam-fhsenv-without-steam.run
 
 				neovim
 				vim
