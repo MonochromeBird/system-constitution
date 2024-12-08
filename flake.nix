@@ -11,7 +11,10 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 		
-		nur.url = "github:nix-community/NUR";
+		nur = {
+			url = "github:nix-community/NUR";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
 	};
 
 	outputs = inputArgs@{ nixpkgs, nixos-cosmic, nixpkgs-stable, nixpkgs-unstable, home-manager, nur, ... }:
@@ -35,10 +38,10 @@
 
 				modules = [
 					./system/global.nix
-					nur.nixosModules.nur
+					nur.modules.nixos.default
 
 					#######################################################################################################
-					# Cosmic                                                                                              #
+					# Cosmic																																															#
 					#######################################################################################################
 					{
 						nix.settings = {

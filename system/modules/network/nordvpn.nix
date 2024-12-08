@@ -1,4 +1,4 @@
-{ config, nur-modules, pkgs, ... }:
+{ config, nur-modules, pkgs, pkgs-unstable, system, ... }:
 {
 	system = {
 		imports = [
@@ -6,7 +6,7 @@
 		];
 
 		nixpkgs.config.packageOverrides = pkgs: {
-			nordvpn = config.nur.repos.LuisChDev.nordvpn;
+			nordvpn = pkgs-unstable.nur.repos.LuisChDev.nordvpn;
 		};
 		
 		allowedUnfree = [ "nordvpn" ];

@@ -6,6 +6,7 @@
 	nixpkgs-stable,
 	nixpkgs-unstable,
 	lawConfig,
+  nur,
 	...
 }: {
 	options = {
@@ -31,6 +32,7 @@
 			default = import nixpkgs-stable {
 				inherit system;
 				config.allowUnfreePredicate = config.nixpkgs.config.allowUnfreePredicate;
+				overlays = [ nur.overlays.default ];
 			};
 		};
 
@@ -39,11 +41,14 @@
 			default = import nixpkgs-unstable {
 				inherit system;
 				config.allowUnfreePredicate = config.nixpkgs.config.allowUnfreePredicate;
+				overlays = [ nur.overlays.default ];
 			};
 		};
 	};
 
 	config = {
+		nixpkgs.overlays = [ nur.overlays.default ];
+		
 		nixpkgs.config = {
 			allowUnfreePredicate = pkg: lib.elem (lib.getName pkg) config.allowedUnfree;
 		};
