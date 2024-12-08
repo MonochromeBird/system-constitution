@@ -5,8 +5,9 @@
 			nur-modules.repos.LuisChDev.modules.nordvpn
 		];
 
-		nixpkgs.config.packageOverrides = pkgs: {
-			nordvpn = pkgs-unstable.nur.repos.LuisChDev.nordvpn;
+		nixpkgs.config.packageOverrides = prev: {
+			# nordvpn = pkgs-unstable.nur.repos.LuisChDev.nordvpn;
+			nordvpn = pkgs.callPackage ./nur-nordvpn.nix {};
 		};
 		
 		allowedUnfree = [ "nordvpn" ];
