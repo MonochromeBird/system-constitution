@@ -31,8 +31,8 @@
     installShellFiles
     python3
     mono
-    dotnet-sdk
-    dotnet-runtime
+    dotnet-sdk_9
+    dotnet-runtime_9
   ];
 
   runtimeDependencies = with pkgs; [
@@ -49,8 +49,8 @@
     libxkbcommon
     alsa-lib
     mono
-    dotnet-sdk
-    dotnet-runtime
+    dotnet-sdk_9
+    dotnet-runtime_9
     libpulseaudio
     dbus
     dbus.lib
