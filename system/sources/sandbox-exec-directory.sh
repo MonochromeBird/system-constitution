@@ -98,6 +98,8 @@ AbortIfMounted()
 
 Mkdirs()
 {
+	mkdir -p $SANDBOX_HOME/$DIRECTORY_WITHIN
+	
 	for i in $(echo "$MUTABLE" | sed "s/,/\n/g")
 	do
 		mkdir -p $SANDBOX_HOME/$DIRECTORY_WITHIN/$i
