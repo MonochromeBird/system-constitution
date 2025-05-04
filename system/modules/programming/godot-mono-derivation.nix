@@ -4,10 +4,10 @@
 
 {
   pkgs ? import <nixpkgs> {},
-  version ? "4.3-stable",
+  version ? "4.4.1-stable",
   bin_name ? "godot4-mono",
   repo ? "godot",
-  hash ? "sha256-7N881aYASmVowZlYHVi6aFqZBZJuUWd5BrdvvdnK01E="
+  hash ? "sha256-uV5pTKGD63IDdmRc3DVHcVzG0MAhUoI4y2UZmCriiy8="
 }: pkgs.stdenv.mkDerivation rec {
   release = "Godot_v${version}_mono_linux";
   bin = "${release}.x86_64";

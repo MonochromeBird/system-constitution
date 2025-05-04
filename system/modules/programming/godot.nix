@@ -8,8 +8,8 @@
 		(pkgs.callPackage ./godot-mono-derivation.nix {
 			bin_name = "godot4-mono-latest";
 			repo = "godot-builds";
-			version = "4.4-stable";
-			hash = "sha256-xUU3zmEH9ZltvVizjb/4qN1EAWcgrU5bWLHlA0zlQ5M=";
+			version = "4.5-dev3";
+			hash = "sha256-Emp453yqSFQCEMuXURZzKittL8L02rgxIHXg0QVuA6Q=";
 		})
 	];
 }
