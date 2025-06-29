@@ -17,7 +17,7 @@
 		};
 	};
 
-	outputs = inputArgs@{ nixpkgs, nixos-cosmic, nixpkgs-stable, nixpkgs-unstable, home-manager, nur, ... }:
+	outputs = inputArgs@{ nixpkgs, nixpkgs-stable, nixpkgs-unstable, home-manager, nur, ... }:
 		let
 			args = inputArgs // {
 				system = "x86_64-linux";
@@ -39,18 +39,6 @@
 				modules = [
 					./system/global.nix
 					nur.modules.nixos.default
-
-					#######################################################################################################
-					# Cosmic																																															#
-					#######################################################################################################
-					{
-						nix.settings = {
-							substituters = [ "https://cosmic.cachix.org/" ];
-							trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
-						};
-					}
-					nixos-cosmic.nixosModules.default
-					#######################################################################################################
 
 					home-manager.nixosModules.home-manager
 

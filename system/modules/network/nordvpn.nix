@@ -1,18 +1,18 @@
 { config, nur-modules, pkgs, pkgs-unstable, system, ... }:
 {
 	system = {
-		imports = [
-			nur-modules.repos.LuisChDev.modules.nordvpn
-		];
+		#imports = [
+		#	nur-modules.repos.LuisChDev.modules.nordvpn
+		#];
 
-		nixpkgs.config.packageOverrides = prev: {
-			# nordvpn = pkgs-unstable.nur.repos.LuisChDev.nordvpn;
-			nordvpn = pkgs.callPackage ./nur-nordvpn.nix {};
-		};
+		#nixpkgs.config.packageOverrides = prev: {
+		#	nordvpn = pkgs-unstable.nur.repos.LuisChDev.nordvpn;
+		#	nordvpn = pkgs.callPackage ./nur-nordvpn.nix {};
+		#};
 		
 		allowedUnfree = [ "nordvpn" ];
 		
-		services.nordvpn.enable = true;
+		# services.nordvpn.enable = true;
 		
 		networking.firewall = {
 			checkReversePath = false;
@@ -21,7 +21,7 @@
 		};
 
 		environment.systemPackages = with pkgs; [
-			(writeShellScriptBin "nv" ''nordvpn $@'')
+			(writeShellScriptBin "nv"  ''nordvpn $@'')
 			(writeShellScriptBin "nvc" ''nordvpn c $@'')
 			(writeShellScriptBin "nvs" ''nordvpn s $@'')
 		];
