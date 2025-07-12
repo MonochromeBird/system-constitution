@@ -17,7 +17,7 @@
 		};
 	};
 
-	outputs = inputArgs@{ nixpkgs, nixos-cosmic, nixpkgs-stable, nixpkgs-unstable, home-manager, nur, ... }:
+	outputs = inputArgs@{ nixpkgs, nixpkgs-stable, nixpkgs-unstable, home-manager, nur, ... }:
 		let
 			args = inputArgs // {
 				system = "x86_64-linux";
