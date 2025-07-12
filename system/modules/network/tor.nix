@@ -1,4 +1,4 @@
-{ pkgs, sandbox, opts, ... }:
+{ pkgs, pkgs-stable, sandbox, opts, ... }:
 {
 	packages = with pkgs; [
 		# tor intentionally kept
@@ -7,7 +7,7 @@
 		tor
 		torsocks
 		
-		(sandbox.package tor-browser opts.sandbox)
+		(sandbox.package pkgs-stable.tor-browser opts.sandbox)
 	];
 
 	system = {

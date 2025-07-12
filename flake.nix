@@ -40,18 +40,6 @@
 					./system/global.nix
 					nur.modules.nixos.default
 
-					#######################################################################################################
-					# Cosmic																																															#
-					#######################################################################################################
-					{
-						nix.settings = {
-							substituters = [ "https://cosmic.cachix.org/" ];
-							trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
-						};
-					}
-					nixos-cosmic.nixosModules.default
-					#######################################################################################################
-
 					home-manager.nixosModules.home-manager
 
 					{ config.identifier = identifier; }
